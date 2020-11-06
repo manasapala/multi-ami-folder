@@ -86,6 +86,9 @@ def snsNotify(appName, newAmi, statusCode):
     if statusCode == 200:
         subject = "Build phase completed successfully"
         messageBody = 'AMI id'+ ' '+ newAmi +' '+ 'is created for' + ' ' + appName  
+    elif statusCode == 300:
+        subject = "Build phase did not complete successfully"
+        messageBody = 'AMI id is created for' + ' ' + appName     
     elif statusCode == 400:
         subject = "Build phase failed"
         messageBody = 'No AMI Config found for the app' + ' ' + appName  
