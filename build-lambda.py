@@ -126,13 +126,17 @@ def lambda_handler(event, context):
             newAmi = invokePacker(region, packerFile, installScript, amiId, targetAmiId) 
             if newAmi != '':    
                 update_ssm_parameter(updateSSMID, newAmi)
-
-            snsNotify(appName, newAmi, 200)
-            print('Exiting Lambda')
-            return {
-                'statusCode': 200,
-                'body': json.dumps('AMI Creation Successful')
-            }
+                snsNotify(appName, newAmi, 200)
+                print('Exiting Lambda')
+                return {
+                   'statusCode': 200,
+                   'body': json.dumps('AMI Creation Successful')
+                }
+            else: 
+                snsNotify(appName, newAmi, 500)
+                return {
+                    'statusCode': 500,
+                    'body': json.dumps('AMI creation was not succesful')
         else:
             snsNotify(appName, newAmi, 400)
             return {
