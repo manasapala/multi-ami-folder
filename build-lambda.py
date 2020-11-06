@@ -133,9 +133,9 @@ def lambda_handler(event, context):
                    'body': json.dumps('AMI Creation Successful')
                 }
             else: 
-                snsNotify(appName, newAmi, 500)
+                snsNotify(appName, newAmi, 300)
                 return {
-                    'statusCode': 500,
+                    'statusCode': 300,
                     'body': json.dumps('AMI creation was not succesful')
         else:
             snsNotify(appName, newAmi, 400)
