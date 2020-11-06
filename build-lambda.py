@@ -62,12 +62,14 @@ def readEvent(currentEvent):
 def invokePacker(region, packerFile, installScript, amiBaseImage, targetAmiName):
     amivalue = ""
     pkr = PackerExecutable("/opt/python/lib/python3.8/site-packages/packerpy/packer")
-    template = download_dir + GITHUB_REPO + '/' + packerFile
-    installScriptFile = download_dir + GITHUB_REPO + '/' + installScript
-    user_data_file = download_dir + GITHUB_REPO + '/bootstrap_win.txt'
     if packerFile == "common-packer-linux.json":
+        template = download_dir + GITHUB_REPO + '/' + 'linux'  + '/' + packerFile
+        installScriptFile = download_dir + GITHUB_REPO + '/' + 'linux' + '/' + appName + '/' + installScript
         template_vars = {'baseimage': amiBaseImage, 'installScript': installScriptFile, 'targetAmiName':targetAmiName, 'region': region}
     else:
+        template = download_dir + GITHUB_REPO + '/' + 'windows'  + '/' + packerFile
+        installScriptFile = download_dir + GITHUB_REPO + '/' + 'windows' + '/' + appName + '/' + installScript
+        user_data_file = download_dir + GITHUB_REPO + '/' + 'windows'+ '/' + appName + '/bootstrap_win.txt'
         template_vars = {'baseimage': amiBaseImage, 'installScript': installScriptFile, 'userdata_file': user_data_file, 'targetAmiName':targetAmiName, 'region': region}
     (ret, out, err) = pkr.build(template, var=template_vars)
     
